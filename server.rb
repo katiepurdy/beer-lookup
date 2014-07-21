@@ -1,7 +1,8 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'sinatra'
+require 'sinatra/reloader' # quick loading during development
 
 get '/' do
-	"Hi, there!"
+	erb :index
 end
