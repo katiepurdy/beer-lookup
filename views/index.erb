@@ -18,24 +18,23 @@
                 value="<%= Rack::Utils.escape_html @query %>"placeholder="Search for a beer.">
         </form>
         <div id="results">
-            <% if @beers && @beers.empty? %>
-                <p>Your search returned no results.</p>
+        <% if @beers && @beers.empty? %>
+          <p>Your search returned no results. :(</p>
+        <% end %>
+        <ul>
+        <% @beers.each do |beer| %>
+          <li class="beer">
+            <% if beer.image_url %>
+              <img src='<%= beer.image_url %>'>
+            <% else %>
+              <span class="no-image"></span>
             <% end %>
-
-            <% @beers.each do |beer| %>
-                <% if beer.image_url %>
-                    <img src="<%= beer.image_url %>">
-                <% else %>
-                    <span class="no-image"></span>
-                <% end %>
             <span class="name"><%= beer.name %></span>
             <span class="description"><%= beer.description %></span>
-            <% end if @beers %>
-
-            <% if @error %>
-                <%= @error %>
-            <% end %>
-        </div>
+          </li>
+        <% end if @beers %>
+        </ul>
+      </div>
     </div>
 
     <footer>
