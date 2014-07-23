@@ -1,28 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="content-type" content="text/html">
-	<title>Beer Search</title>
-	<link type="text/css" rel="stylesheet" href="styles.css">
+    <meta http-equiv="content-type" content="text/html">
+    <title>Beer Search</title>
+    <link type="text/css" rel="stylesheet" href="styles.css">
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
 </head>
 <body>
-	<header>
-		<h1>Beer Search</h1>
-	</header>
+    <header>
+        <h1>Beer Search</h1>
+    </header>
 
-	<div id="content">
-		<form id="beer-search" method="get" accept-charset="utf-8">
-			<input type="text" class="search" name="q" 
-				value="<%= Rack::Utils.escape_html @query %>"placeholder="Search for a beer.">
-		</form>
-		<div id="results">
-		</div>
-	</div>
+    <div id="content">
+        <form id="beer-search" method="get" accept-charset="utf-8">
+            <input type="text" class="search" name="q" 
+                value="<%= Rack::Utils.escape_html @query %>"placeholder="Search for a beer.">
+        </form>
+        <div id="results">
+            <% if @beers && @beers.empty? %>
+                <p>Your search returned no results.</p>
+            <% end %>
 
-	<footer>
-		<p>Powered by <a href="http://brewerydb.com" target="_blank">BreweryDB</a>
-	</footer>
+            <% @beers.each do |beer| %>
+                <% if beer.image_url %>
+                    <img src="<%= beer.image_url %>">
+                <% else %>
+                    <span class="no-image"></span>
+                <% end %>
+            <span class="name"><%= beer.name %></span>
+            <span class="description"><%= beer.description %></span>
+            <% end if @beers %>
+
+            <% if @error %>
+                <%= @error %>
+            <% end %>
+        </div>
+    </div>
+
+    <footer>
+        <p>Powered by <a href="http://brewerydb.com" target="_blank">BreweryDB</a>
+    </footer>
 </body>
 </html>
